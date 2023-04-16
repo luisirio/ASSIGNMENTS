@@ -1,8 +1,6 @@
-import pandas as pd
 import os
 import argparse
-
-# Comment: Only to test CI
+import pandas as pd
 
 def clean_data(region: str = 'PT'):
     """
