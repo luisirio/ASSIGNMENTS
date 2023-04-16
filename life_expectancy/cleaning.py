@@ -1,3 +1,6 @@
+"""
+Clean data
+"""
 import os
 import argparse
 import pandas as pd
