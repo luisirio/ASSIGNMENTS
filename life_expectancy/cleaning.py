@@ -1,6 +1,6 @@
 import os
-import pandas as pd
 import argparse
+import pandas as pd
 
 def clean_data(region: str = 'PT'):
     """
