@@ -2,6 +2,8 @@ import os
 import pandas as pd
 import argparse
 
+# Comment: Only to test CI
+
 def clean_data(region: str = 'PT'):
     """
     Method used to clean data.
