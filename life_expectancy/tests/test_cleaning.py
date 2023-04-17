@@ -2,6 +2,7 @@
 import pandas as pd
 
 from life_expectancy.cleaning import clean_data
+
 from . import OUTPUT_DIR
 
 

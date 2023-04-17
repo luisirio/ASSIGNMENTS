@@ -1,6 +1,8 @@
-import os
-import pandas as pd
 import argparse
+import os
+
+import pandas as pd
+
 
 def clean_data(region: str = 'PT'):
     """
@@ -26,7 +28,7 @@ def clean_data(region: str = 'PT'):
             var_name='year',
             value_name='value'
         )
-    
+
     # rename column
     melted_df.rename(columns={'geo\\time':'region'}, inplace = True)
 
