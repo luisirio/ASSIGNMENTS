@@ -30,7 +30,7 @@ Now you're ready to go!
   cd assignments
   git init
   ```
-  
+
    You will be later pushing this new repo to your personal GitHub account.
 
 2. Create a virtual environment with `python -m venv .venv`. If you are using conda, you can create a virtual environment with `conda create --name foundations pip`.
@@ -40,7 +40,7 @@ Now you're ready to go!
   ```bash
   pip install -e '.[dev]'
   ```
-  
+
   And now you should be ready to get started!
 
 ## Using this project
