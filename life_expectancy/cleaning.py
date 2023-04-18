@@ -1,54 +1,89 @@
 import argparse
-import os
+from pathlib import Path
 
 import pandas as pd
 
 
-def clean_data(region: str = 'PT'):
+def load_data() -> pd.DataFrame:
+    """
+    Method used to load data.
+
+    Returns:
+        [pd.DataFrame]: Dataframe to be cleaned.
+    """
+    data_df = pd.read_csv(
+        f"{Path(__file__).parent}/data/eu_life_expectancy_raw.tsv", sep='\t')
+
+    return data_df
+
+def clean_data(data_df: pd.DataFrame, region: str = 'PT') -> pd.DataFrame:
     """
     Method used to clean data.
+    Args:
+        data_df [pd.DataFrame]: The raw dataframe.
+        region [str]: Region to be selected.
+    Returns:
+        [pd.DataFrame]: Data cleaned and filtered by region.
     """
 
-    raw_data = pd.read_csv(
-            f"{os.getcwd()}/life_expectancy/data/eu_life_expectancy_raw.tsv", sep='\t')
-
     # 'unit,sex,age,geo\\time'
-    initial_columns = raw_data.columns[0]
+    initial_columns = data_df.columns[0]
 
     # ['unit', 'sex', 'age', 'geo\\time']
-    new_columns = raw_data.columns[0].split(',')
+    new_columns = data_df.columns[0].split(',')
 
-    raw_data[new_columns] = raw_data[initial_columns].str.split(',', expand=True)
+    data_df[new_columns] = data_df[initial_columns].str.split(',', expand=True)
 
-    raw_data = raw_data.drop(columns=initial_columns)
+    data_df = data_df.drop(columns=initial_columns)
 
-    melted_df = pd.melt(
-            raw_data,
+    clean_df = pd.melt(
+            data_df,
             new_columns,
             var_name='year',
             value_name='value'
         )
 
     # rename column
-    melted_df.rename(columns={'geo\\time':'region'}, inplace = True)
+    clean_df.rename(columns={'geo\\time':'region'}, inplace = True)
 
     # Ensures year is an int
-    melted_df['year'] = melted_df['year'].astype('int')
+    clean_df['year'] = clean_df['year'].astype('int')
 
     # remove non-numeric characters and extract float values
-    melted_df['value'] = melted_df['value'].str.extract(r'(\d+\.\d+)', expand=False).astype(float)
+    clean_df['value'] = clean_df['value'].str.extract(r'(\d+\.\d+)', expand=False).astype(float)
 
     # Filters only the data where region equal to PT (Portugal)
-    melted_df = melted_df[melted_df['region']== region]
+    clean_df = clean_df[clean_df['region']== region]
 
     # drop NaN values
-    melted_df = melted_df.dropna(subset=['value'])
+    clean_df = clean_df.dropna(subset=['value'])
+
+    return clean_df
+
+
+def save_data(clean_df: pd.DataFrame) -> None:
+    """
+    Method used to save data.
+    Args:
+        clean_df [pd.DataFrame]: Cleaned and filtered DataFrame to be saved.
+    """
 
     # Save the resulting data frame to the data folder as pt_life_expectancy.csv
-    melted_df.to_csv(f"{os.getcwd()}/life_expectancy/data/pt_life_expectancy.csv", index = False)
+    clean_df.to_csv(
+            f"{Path(__file__).parent}/data/pt_life_expectancy.csv", index = False)
+
+
+def main(region: str) -> None:
+    """
+    Main function.
+    Method that loads, cleans and saves data.
+    """
+    data_df = load_data()
+    clean_df = clean_data(data_df, region)
+    save_data(clean_df)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('region')
     args = parser.parse_args()
-    clean_data(args.region)
+    main(args.region)
