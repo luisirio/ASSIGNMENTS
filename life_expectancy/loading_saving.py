@@ -3,19 +3,18 @@ from pathlib import Path
 import pandas as pd
 
 
-def load_data() -> pd.DataFrame:
+def load_data(file_path: str) -> pd.DataFrame:
     """
     Method used to load data.
 
     Returns:
         [pd.DataFrame]: Dataframe to be cleaned.
     """
-    data_df = pd.read_csv(
-        f"{Path(__file__).parent}/data/eu_life_expectancy_raw.tsv", sep='\t')
+    data_df = pd.read_csv(file_path, sep='\t')
 
     return data_df
 
-def save_data(clean_df: pd.DataFrame) -> None:
+def save_data(clean_df: pd.DataFrame, file_path: Path) -> None:
     """
     Method used to save data.
     Args:
@@ -23,5 +22,4 @@ def save_data(clean_df: pd.DataFrame) -> None:
     """
 
     # Save the resulting data frame to the data folder as pt_life_expectancy.csv
-    clean_df.to_csv(
-            f"{Path(__file__).parent}/data/pt_life_expectancy.csv", index = False)
+    clean_df.to_csv(file_path, index = False)
