@@ -7,6 +7,9 @@ def load_data(file_path: str) -> pd.DataFrame:
     """
     Method used to load data.
 
+    Args:
+        file_path [str]: file path to load data.
+
     Returns:
         [pd.DataFrame]: Dataframe to be cleaned.
     """
@@ -19,6 +22,7 @@ def save_data(clean_df: pd.DataFrame, file_path: Path) -> None:
     Method used to save data.
     Args:
         clean_df [pd.DataFrame]: Cleaned and filtered DataFrame to be saved.
+        file_path [str]: file path to save data.
     """
 
     # Save the resulting data frame to the data folder as pt_life_expectancy.csv

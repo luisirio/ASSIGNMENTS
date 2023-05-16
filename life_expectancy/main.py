@@ -17,6 +17,9 @@ def main(region: str) -> pd.DataFrame:
     """
     Main function.
     Method that loads, cleans and saves data.
+
+    Args:
+    region [str]: region to filter data.
     """
     data_df = load_data(INPUT_FILE_PATH)
     clean_df = clean_data(data_df, region)
