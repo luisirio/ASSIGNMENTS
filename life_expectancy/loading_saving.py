@@ -1,3 +1,7 @@
+"""
+Module to load and save data
+"""
+
 from pathlib import Path
 
 import pandas as pd
@@ -19,13 +23,16 @@ class DataLoader:
     def __init__(self, data_format):
         self.data_format = data_format
 
-    def load_csv(self):
+    def load_csv(self) -> pd.DataFrame:
+        """Method to load csv file"""
         return pd.read_csv(TSV_FILE_PATH, sep='\t')
 
-    def load_json(self):
+    def load_json(self) -> pd.DataFrame:
+        """Method to load json file"""
         return pd.read_json(JSON_FILE_PATH)
 
-    def load_data(self):
+    def load_data(self) -> None:
+        """Method to verify data format"""
         if self.data_format == 'csv':
             return self.load_csv()
         elif self.data_format == 'json':
@@ -34,13 +41,13 @@ class DataLoader:
             raise ValueError("Unsupported data format.")
 
 
-def save_data(clean_df: pd.DataFrame, file_path: Path) -> None:
+def save_data(cleaned_df: pd.DataFrame, file_path: Path) -> None:
     """
     Method used to save data.
     Args:
-        clean_df [pd.DataFrame]: Cleaned and filtered DataFrame to be saved.
+        cleaned_df [pd.DataFrame]: Cleaned and filtered DataFrame to be saved.
         file_path [str]: file path to save data.
     """
 
     # Save the data frame to the data folder as pt_life_expectancy.csv
-    clean_df.to_csv(file_path, index=False)
+    cleaned_df.to_csv(file_path, index=False)

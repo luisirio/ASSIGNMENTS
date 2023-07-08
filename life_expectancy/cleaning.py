@@ -1,3 +1,7 @@
+"""
+Module to clean data
+"""
+
 from dataclasses import dataclass
 
 import pandas as pd
@@ -7,9 +11,14 @@ from life_expectancy.region import Region
 
 @dataclass
 class DataCleaner:
+    """
+    This class is responsible for verifying the format
+    and assign the right clean method
+    """
     data_format: str
 
-    def clean_data(self, data_df: pd.DataFrame, region: str):
+    def clean_data(self, data_df: pd.DataFrame, region: str) -> pd.DataFrame:
+        """Method to verify data format and region"""
         try:
             country = Region(region)
         except ValueError:
@@ -25,7 +34,7 @@ class DataCleaner:
         return cleaned_df
 
     def _clean_csv(self, data_df: pd.DataFrame, country: Region):
-        # Clean CSV specific operations
+        """Method to clean csv file"""
 
         # 'unit,sex,age,geo\\time'
         initial_columns = data_df.columns[0]
@@ -65,8 +74,10 @@ class DataCleaner:
 
         return cleaned_df
 
-    def _clean_json(self, data_df: pd.DataFrame, country: Region):
-        # Clean JSON specific operations
+    def _clean_json(
+            self, data_df: pd.DataFrame, country: Region
+            ) -> pd.DataFrame:
+        """Method to clean json file"""
 
         # Drop columns that are not in the list we want
         cleaned_df = data_df.drop(columns='flag', axis=1)

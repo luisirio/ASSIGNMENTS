@@ -18,6 +18,7 @@ def main(file_format: str, region: str) -> pd.DataFrame:
     Method that loads, cleans and saves data.
 
     Args:
+    file_format [str]: file format (e.g. "csv", "json")
     region [str]: region to filter data.
     """
 
