@@ -3,17 +3,16 @@ from pathlib import Path
 
 import pandas as pd
 
-from life_expectancy.cleaning import clean_data
-from life_expectancy.loading_saving import load_data, save_data
+from life_expectancy.cleaning import DataCleaner
+from life_expectancy.loading_saving import DataLoader, save_data
 
 PARENT_PATH = Path(__file__).parent
 FILE_PATH = PARENT_PATH / 'data'
-INPUT_FILE_NAME = 'eu_life_expectancy_raw.tsv'
 OUTPUT_FILE_NAME = 'pt_life_expectancy.csv'
-INPUT_FILE_PATH = FILE_PATH / INPUT_FILE_NAME
 OUTPUT_FILE_PATH = FILE_PATH / OUTPUT_FILE_NAME
 
-def main(region: str) -> pd.DataFrame:
+
+def main(file_format: str, region: str) -> pd.DataFrame:
     """
     Main function.
     Method that loads, cleans and saves data.
@@ -21,13 +20,18 @@ def main(region: str) -> pd.DataFrame:
     Args:
     region [str]: region to filter data.
     """
-    data_df = load_data(INPUT_FILE_PATH)
-    clean_df = clean_data(data_df, region)
-    save_data(clean_df, OUTPUT_FILE_PATH)
-    return clean_df
+
+    data_df = DataLoader(file_format).load_data()
+
+    cleaned_df = DataCleaner(file_format).clean_data(data_df, region)
+
+    save_data(cleaned_df, OUTPUT_FILE_PATH)
+    return cleaned_df
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
+    parser.add_argument('file_path')
     parser.add_argument('region')
     args = parser.parse_args()
-    main(args.region)
+    main(args.file_path, args.region)
