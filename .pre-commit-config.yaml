@@ -15,7 +15,7 @@ repos:
       - id: check-merge-conflict
       - id: check-case-conflict
       - id: detect-private-key
-      #- id: check-added-large-files
+      - id: check-added-large-files
       - id: check-json
       - id: check-symlinks
       - id: check-toml
