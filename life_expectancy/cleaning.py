@@ -21,8 +21,8 @@ class DataCleaner:
         """Method to verify data format and region"""
         try:
             country = Region(region)
-        except ValueError:
-            raise ValueError(f"Invalid region.{region}")
+        except ValueError as exc:
+            print(exc)
 
         if self.data_format == 'csv':
             cleaned_df = self._clean_csv(data_df, country)

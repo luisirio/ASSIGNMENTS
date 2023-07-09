@@ -35,10 +35,9 @@ class DataLoader:
         """Method to verify data format"""
         if self.data_format == 'csv':
             return self.load_csv()
-        elif self.data_format == 'json':
+        if self.data_format == 'json':
             return self.load_json()
-        else:
-            raise ValueError("Unsupported data format.")
+        raise ValueError("Unsupported data format.")
 
 
 def save_data(cleaned_df: pd.DataFrame, file_path: Path) -> None:
