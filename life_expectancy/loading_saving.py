@@ -10,7 +10,6 @@ PARENT_PATH = Path(__file__).parent
 FILE_PATH = PARENT_PATH / 'data'
 TSV_FILE_NAME = 'eu_life_expectancy_raw.tsv'
 JSON_FILE_NAME = 'eurostat_life_expect.json'
-OUTPUT_FILE_NAME = 'pt_life_expectancy.csv'
 TSV_FILE_PATH = FILE_PATH / TSV_FILE_NAME
 JSON_FILE_PATH = FILE_PATH / JSON_FILE_NAME
 

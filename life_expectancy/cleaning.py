@@ -18,11 +18,8 @@ class DataCleaner:
     data_format: str
 
     def clean_data(self, data_df: pd.DataFrame, region: str) -> pd.DataFrame:
-        """Method to verify data format and region"""
-        try:
-            country = Region(region)
-        except ValueError as exc:
-            print(exc)
+        # Region defined to clean dataframe
+        country = Region(region)
 
         if self.data_format == 'csv':
             cleaned_df = self._clean_csv(data_df, country)
@@ -33,7 +30,8 @@ class DataCleaner:
 
         return cleaned_df
 
-    def _clean_csv(self, data_df: pd.DataFrame, country: Region):
+    @staticmethod
+    def _clean_csv(data_df: pd.DataFrame, country: Region):
         """Method to clean csv file"""
 
         # 'unit,sex,age,geo\\time'
@@ -74,8 +72,9 @@ class DataCleaner:
 
         return cleaned_df
 
+    @staticmethod
     def _clean_json(
-            self, data_df: pd.DataFrame, country: Region
+            data_df: pd.DataFrame, country: Region
             ) -> pd.DataFrame:
         """Method to clean json file"""
 
