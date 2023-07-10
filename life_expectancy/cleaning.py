@@ -18,6 +18,8 @@ class DataCleaner:
     data_format: str
 
     def clean_data(self, data_df: pd.DataFrame, region: str) -> pd.DataFrame:
+        """Method to verify data format and clean data_df"""
+
         # Region defined to clean dataframe
         country = Region(region)
 
