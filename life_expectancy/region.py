@@ -1,6 +1,6 @@
 """Region enum script"""
 from enum import Enum
-from typing import List
+from typing import List, Type
 
 
 class Region(Enum):
@@ -63,7 +63,7 @@ class Region(Enum):
     XK = "XK"
 
     @classmethod
-    def list_countries(cls) -> List[str]:
+    def list_countries(cls: Type['Region']) -> List[str]:
         """Lists all values for the region enum"""
         eu_totals = [
             cls.EA18,

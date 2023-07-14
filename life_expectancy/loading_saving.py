@@ -22,20 +22,12 @@ class DataLoader:
     def __init__(self, data_format):
         self.data_format = data_format
 
-    def load_csv(self) -> pd.DataFrame:
-        """Method to load csv file"""
-        return pd.read_csv(TSV_FILE_PATH, sep='\t')
-
-    def load_json(self) -> pd.DataFrame:
-        """Method to load json file"""
-        return pd.read_json(JSON_FILE_PATH)
-
     def load_data(self) -> None:
         """Method to verify data format"""
         if self.data_format == 'csv':
-            return self.load_csv()
+            return pd.read_csv(TSV_FILE_PATH, sep='\t')  # load csv file
         if self.data_format == 'json':
-            return self.load_json()
+            return pd.read_json(JSON_FILE_PATH)  # load json file
         raise ValueError("Unsupported data format.")
 
 

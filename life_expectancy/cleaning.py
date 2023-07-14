@@ -33,7 +33,7 @@ class DataCleaner:
         return cleaned_df
 
     @staticmethod
-    def _clean_csv(data_df: pd.DataFrame, country: Region):
+    def _clean_csv(data_df: pd.DataFrame, country: Region) -> pd.DataFrame:
         """Method to clean csv file"""
 
         # 'unit,sex,age,geo\\time'
