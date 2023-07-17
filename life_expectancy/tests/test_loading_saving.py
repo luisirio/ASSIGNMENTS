@@ -5,25 +5,30 @@ from unittest.mock import Mock
 
 import pandas as pd
 
-from life_expectancy.loading_saving import DataLoader, save_data
+from life_expectancy.loading_saving import (DataLoaderJSON, DataLoaderTSV,
+                                            save_data)
 
 PARENT_PATH = Path(__file__).parent.parent
 FILE_PATH = PARENT_PATH / 'data'
 OUTPUT_FILE_NAME = 'pt_life_expectancy.csv'
 OUTPUT_FILE_PATH = FILE_PATH / OUTPUT_FILE_NAME
+TSV_FILE_NAME = 'eu_life_expectancy_raw.tsv'
+JSON_FILE_NAME = 'eurostat_life_expect.json'
+TSV_FILE_PATH = FILE_PATH / TSV_FILE_NAME
+JSON_FILE_PATH = FILE_PATH / JSON_FILE_NAME
 
 
 def test_load_data_tsv(eu_life_expectancy_raw):
 
     """Test load_data function for csv"""
-    data_df = DataLoader('csv').load_data()
+    data_df = DataLoaderTSV(TSV_FILE_PATH).load_data()
     pd.testing.assert_frame_equal(data_df, eu_life_expectancy_raw)
 
 
 def test_load_data_json(eurostat_life_expect):
 
     """Test load_data function for json"""
-    data_df = DataLoader('json').load_data()
+    data_df = DataLoaderJSON(JSON_FILE_PATH).load_data()
     pd.testing.assert_frame_equal(data_df, eurostat_life_expect)
 
 

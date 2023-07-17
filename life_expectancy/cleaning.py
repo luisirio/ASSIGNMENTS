@@ -10,31 +10,16 @@ from life_expectancy.region import Region
 
 
 @dataclass
-class DataCleaner:
+class DataCleanerTSV:
     """
-    This class is responsible for verifying the format
-    and assign the right clean method
+    This class is responsible to clean CSV dataframe
     """
-    data_format: str
 
     def clean_data(self, data_df: pd.DataFrame, region: str) -> pd.DataFrame:
-        """Method to verify data format and clean data_df"""
+        """Method to verify region and clean data_df"""
 
         # Region defined to clean dataframe
         country = Region(region)
-
-        if self.data_format == 'csv':
-            cleaned_df = self._clean_csv(data_df, country)
-        elif self.data_format == 'json':
-            cleaned_df = self._clean_json(data_df, country)
-        else:
-            raise ValueError("Unsupported data format.")
-
-        return cleaned_df
-
-    @staticmethod
-    def _clean_csv(data_df: pd.DataFrame, country: Region) -> pd.DataFrame:
-        """Method to clean csv file"""
 
         # 'unit,sex,age,geo\\time'
         initial_columns = data_df.columns[0]
@@ -74,11 +59,18 @@ class DataCleaner:
 
         return cleaned_df
 
-    @staticmethod
-    def _clean_json(
-            data_df: pd.DataFrame, country: Region
-            ) -> pd.DataFrame:
-        """Method to clean json file"""
+
+@dataclass
+class DataCleanerJSON:
+    """
+    This class is responsible to clean JSON dataframe
+    """
+
+    def clean_data(self, data_df: pd.DataFrame, region: str) -> pd.DataFrame:
+        """Method to verify region and clean data_df"""
+
+        # Region defined to clean dataframe
+        country = Region(region)
 
         # Drop columns that are not in the list we want
         cleaned_df = data_df.drop(columns='flag', axis=1)

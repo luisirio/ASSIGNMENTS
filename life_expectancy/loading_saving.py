@@ -6,29 +6,27 @@ from pathlib import Path
 
 import pandas as pd
 
-PARENT_PATH = Path(__file__).parent
-FILE_PATH = PARENT_PATH / 'data'
-TSV_FILE_NAME = 'eu_life_expectancy_raw.tsv'
-JSON_FILE_NAME = 'eurostat_life_expect.json'
-TSV_FILE_PATH = FILE_PATH / TSV_FILE_NAME
-JSON_FILE_PATH = FILE_PATH / JSON_FILE_NAME
 
-
-class DataLoader:
+class DataLoaderTSV:
     """
-    This class is responsible for verifying the format
-    and assign the right load method
+    This class is responsible to load the CSV file
     """
-    def __init__(self, data_format):
-        self.data_format = data_format
+    def __init__(self, file_path: Path) -> None:
+        self.file_path = file_path
 
     def load_data(self) -> None:
-        """Method to verify data format"""
-        if self.data_format == 'csv':
-            return pd.read_csv(TSV_FILE_PATH, sep='\t')  # load csv file
-        if self.data_format == 'json':
-            return pd.read_json(JSON_FILE_PATH)  # load json file
-        raise ValueError("Unsupported data format.")
+        return pd.read_csv(self.file_path, sep='\t')
+
+
+class DataLoaderJSON:
+    """
+    This class is responsible to load the JSON file
+    """
+    def __init__(self, file_path: Path) -> None:
+        self.file_path = file_path
+
+    def load_data(self) -> None:
+        return pd.read_json(self.file_path)
 
 
 def save_data(cleaned_df: pd.DataFrame, file_path: Path) -> None:
