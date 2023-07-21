@@ -1,29 +1,41 @@
+"""
+Module to load and save data
+"""
+
 from pathlib import Path
 
 import pandas as pd
 
 
-def load_data(file_path: str) -> pd.DataFrame:
+class DataLoaderTSV:
     """
-    Method used to load data.
-
-    Args:
-        file_path [str]: file path to load data.
-
-    Returns:
-        [pd.DataFrame]: Dataframe to be cleaned.
+    This class is responsible to load the CSV file
     """
-    data_df = pd.read_csv(file_path, sep='\t')
+    def __init__(self, file_path: Path) -> None:
+        self.file_path = file_path
 
-    return data_df
+    def load_data(self) -> None:
+        return pd.read_csv(self.file_path, sep='\t')
 
-def save_data(clean_df: pd.DataFrame, file_path: Path) -> None:
+
+class DataLoaderJSON:
+    """
+    This class is responsible to load the JSON file
+    """
+    def __init__(self, file_path: Path) -> None:
+        self.file_path = file_path
+
+    def load_data(self) -> None:
+        return pd.read_json(self.file_path)
+
+
+def save_data(cleaned_df: pd.DataFrame, file_path: Path) -> None:
     """
     Method used to save data.
     Args:
-        clean_df [pd.DataFrame]: Cleaned and filtered DataFrame to be saved.
+        cleaned_df [pd.DataFrame]: Cleaned and filtered DataFrame to be saved.
         file_path [str]: file path to save data.
     """
 
-    # Save the resulting data frame to the data folder as pt_life_expectancy.csv
-    clean_df.to_csv(file_path, index = False)
+    # Save the data frame to the data folder as pt_life_expectancy.csv
+    cleaned_df.to_csv(file_path, index=False)
